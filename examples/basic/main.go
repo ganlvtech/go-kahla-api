@@ -33,9 +33,10 @@ func main() {
 	})
 	fmt.Println(response3)
 
+	// find first group
 	var conversationId uint32
 	for _, v := range response3.Items {
-		if v.Discriminator == kahla.Conversation_Discriminator_name[int32(kahla.Conversation_Discriminator_GroupConversation)] {
+		if v.Discriminator == kahla.Conversation_Discriminator_name[kahla.Conversation_Discriminator_GroupConversation] {
 			conversationId = v.ConversationId
 		}
 	}
@@ -47,32 +48,33 @@ func main() {
 
 	file, _ := os.Open("main.go")
 	defer file.Close()
-	file2 := kahla.RequestFile(file)
-	response9, _, _ := c.Files.UploadFile(&kahla.Files_UploadFileRequest{
-		File:           &file2,
+	response5, _, _ := c.Files.UploadFile(&kahla.Files_UploadFileRequest{
+		File:           file,
 		ConversationId: conversationId,
 	})
-	fmt.Println(response9)
+	fmt.Println(response5)
 
 	// content := "Send By protobuf rpc compiled go-kahla-api client"
-	content := fmt.Sprintf("[file]%d-%s-%d B", response9.FileKey, response9.SavedFileName, response9.FileSize)
+	content := fmt.Sprintf("[file]%d-%s-%d B", response5.FileKey, response5.SavedFileName, response5.FileSize)
 	content, _ = cryptojs.AesEncrypt(content, response4.Value.AesKey)
-	response5, _, _ := c.Conversation.SendMessage(&kahla.Conversation_SendMessageRequest{
+	response6, _, _ := c.Conversation.SendMessage(&kahla.Conversation_SendMessageRequest{
 		At:      []string{response4.Value.Users[0].User.Id},
 		Content: content,
 		Id:      conversationId,
 	})
-	fmt.Println(response5)
+	fmt.Println(response6)
 
-	// response6, _, _ := c.Friendship.Mine()
-	// fmt.Println(response6)
-	//
-	// response7, _, _ := c.Auth.UpdateInfo(&kahla.Auth_UpdateInfoRequest{
-	// 	NickName: "Ganlv",
-	// 	Bio:      "Hello everyone. I'm a ... i don't know.",
-	// })
-	// fmt.Println(response7)
-	//
-	// response8, _, _ := c.Devices.MyDevices()
-	// fmt.Println(response8)
+	response7, _, _ := c.Friendship.Mine()
+	fmt.Println(response7)
+
+	nickName := "Ganlv"
+	bio := "Hello everyone. I'm a ... i don't know."
+	response8, _, _ := c.Auth.UpdateInfo(&kahla.Auth_UpdateInfoRequest{
+		NickName: &nickName,
+		Bio:      &bio,
+	})
+	fmt.Println(response8)
+
+	response9, _, _ := c.Devices.MyDevices()
+	fmt.Println(response9)
 }

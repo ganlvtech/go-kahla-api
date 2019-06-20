@@ -1,7 +1,7 @@
 syntax = "proto3";
 package kahla;
 
-import "extend.proto";
+import "rest.proto";
 import "google/protobuf/empty.proto";
 
 service Auth {
@@ -88,22 +88,24 @@ message Auth_MeResponse {
         string nickName = 9;
         string preferedLanguage = 10;
         string sex = 11;
-        int32 themeId = 12;
+        uint32 themeId = 12;
     }
 }
 message Auth_UpdateInfoRequest {
-    string NickName = 1;
-    string Bio = 2;
-    uint32 HeadImgKey = 3;
-    bool HideMyEmail = 4;
+    string NickName = 1 [(rest.request_param_nullable) = true];
+    string Bio = 2 [(rest.request_param_nullable) = true];
+    // TODO change to headImgFileKey
+    uint32 HeadImgKey = 3 [(rest.request_param_nullable) = true];
+    // TODO change to makeEmailPublic
+    bool HideMyEmail = 4 [(rest.request_param_nullable) = true];
 }
 message Auth_UpdateInfoResponse {
     sint32 code = 1;
     string message = 2;
 }
 message Auth_UpdateClientSettingRequest {
-    uint32 ThemeId = 1;
-    bool EnableEmailNotification = 2;
+    uint32 ThemeId = 1 [(rest.request_param_nullable) = true];
+    bool EnableEmailNotification = 2 [(rest.request_param_nullable) = true];
 }
 message Auth_UpdateClientSettingResponse {
     sint32 code = 1;

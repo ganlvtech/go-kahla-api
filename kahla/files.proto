@@ -1,7 +1,7 @@
 syntax = "proto3";
 package kahla;
 
-import "extend.proto";
+import "rest.proto";
 
 service Files {
     rpc UploadIcon (Files_UploadIconRequest) returns (Files_UploadIconResponse) {
