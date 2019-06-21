@@ -12,6 +12,10 @@ type OssService struct {
 	baseUrl string
 }
 
+func NewOssService(client *http.Client, baseUrl string) *OssService {
+	return &OssService{client: client, baseUrl: baseUrl}
+}
+
 func (s *OssService) HeadImgFile(headImgFileKey int, w int, h int) ([]byte, *http.Response, error) {
 	v := url.Values{}
 	v.Set("w", strconv.Itoa(w))

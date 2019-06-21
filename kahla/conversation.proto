@@ -34,6 +34,7 @@ message Conversation_AllResponse {
         uint32 unReadAmount = 5;
         uint32 conversationId = 6;
         string discriminator = 7;
+        // null when GroupConversation
         string userId = 8;
         string aesKey = 9;
         bool muted = 10;
@@ -42,7 +43,7 @@ message Conversation_AllResponse {
 }
 message Conversation_GetMessageRequest {
     uint32 id = 1;
-    uint32 skipTill = 2;
+    int32 skipTill = 2;
     uint32 take = 3;
 }
 message Conversation_GetMessageResponse {

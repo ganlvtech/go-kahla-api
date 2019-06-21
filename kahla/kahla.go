@@ -22,14 +22,14 @@ func NewClient(baseUrl string, ossUrl string) *Client {
 	client := &http.Client{}
 	client.Jar, _ = cookiejar.New(nil)
 	return &Client{
-		client:client,
-		baseUrl: baseUrl,
-		Auth: &AuthService{client: client, baseUrl: baseUrl},
-		Conversation: &ConversationService{client: client, baseUrl: baseUrl},
-		Devices: &DevicesService{client: client, baseUrl: baseUrl},
-		Files: &FilesService{client: client, baseUrl: baseUrl},
-		Friendship: &FriendshipService{client: client, baseUrl: baseUrl},
-		Groups: &GroupsService{client: client, baseUrl: baseUrl},
-		Oss: &OssService{client: client, baseUrl: ossUrl},
+		client:       client,
+		baseUrl:      baseUrl,
+		Auth:         NewAuthService(client, baseUrl),
+		Conversation: NewConversationService(client, baseUrl),
+		Devices:      NewDevicesService(client, baseUrl),
+		Files:        NewFilesService(client, baseUrl),
+		Friendship:   NewFriendshipService(client, baseUrl),
+		Groups:       NewGroupsService(client, baseUrl),
+		Oss:          NewOssService(client, baseUrl),
 	}
 }

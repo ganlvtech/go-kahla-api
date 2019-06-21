@@ -52,7 +52,7 @@ type Conversation_AllResponse_Item struct {
 
 type Conversation_GetMessageRequest struct {
 	Id       uint32 `json:"id,omitempty"`
-	SkipTill uint32 `json:"skipTill,omitempty"`
+	SkipTill int32  `json:"skipTill,omitempty"`
 	Take     uint32 `json:"take,omitempty"`
 }
 
@@ -220,7 +220,7 @@ func (s *ConversationService) All(in *Conversation_AllRequest) (out *Conversatio
 func (s *ConversationService) GetMessage(in *Conversation_GetMessageRequest) (out *Conversation_GetMessageResponse, resp *http.Response, err error) {
 	v := url.Values{}
 	v.Add("id", strconv.FormatUint(uint64(in.Id), 10))
-	v.Add("skipTill", strconv.FormatUint(uint64(in.SkipTill), 10))
+	v.Add("skipTill", strconv.FormatInt(int64(in.SkipTill), 10))
 	v.Add("take", strconv.FormatUint(uint64(in.Take), 10))
 	req, err := http.NewRequest("GET", s.baseUrl+"/Conversation/GetMessage?"+v.Encode(), nil)
 	if err != nil {

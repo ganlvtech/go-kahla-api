@@ -92,20 +92,20 @@ message Auth_MeResponse {
     }
 }
 message Auth_UpdateInfoRequest {
-    string NickName = 1 [(rest.request_param_nullable) = true];
-    string Bio = 2 [(rest.request_param_nullable) = true];
+    string NickName = 1;
+    string Bio = 2 [(rest.nullable) = true];
     // TODO change to headImgFileKey
-    uint32 HeadImgKey = 3 [(rest.request_param_nullable) = true];
+    uint32 HeadImgKey = 3;
     // TODO change to makeEmailPublic
-    bool HideMyEmail = 4 [(rest.request_param_nullable) = true];
+    bool HideMyEmail = 4;
 }
 message Auth_UpdateInfoResponse {
     sint32 code = 1;
     string message = 2;
 }
 message Auth_UpdateClientSettingRequest {
-    uint32 ThemeId = 1 [(rest.request_param_nullable) = true];
-    bool EnableEmailNotification = 2 [(rest.request_param_nullable) = true];
+    uint32 ThemeId = 1 [(rest.nullable) = true];
+    bool EnableEmailNotification = 2 [(rest.nullable) = true];
 }
 message Auth_UpdateClientSettingResponse {
     sint32 code = 1;
