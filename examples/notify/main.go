@@ -78,7 +78,7 @@ func main() {
 		log.Fatal(authByPasswordResponse.Code, ":", authByPasswordResponse.Message)
 	}
 
-	initPusherResponse, _, err := c.Auth.InitPusher()
+	initPusherResponse, httpResponse, err := c.Auth.InitPusher()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -99,5 +99,8 @@ func main() {
 	}()
 
 	p := pusher.NewPusher(initPusherResponse.ServerPath, pusherEventHandler)
-	p.Connect(interrupt2)
+	err = p.Connect(interrupt2)
+	if err != nil {
+		log.Fatal(err, "Connect to pusher failed.")
+	}
 }
