@@ -98,7 +98,22 @@ func main() {
 		close(interrupt2)
 	}()
 
-	p := pusher.NewPusher(initPusherResponse.ServerPath, pusherEventHandler)
+	p := pusher.New(initPusherResponse.ServerPath, pusherEventHandler)
+
+	go func() {
+		for v := range p.StateChangeChan {
+			switch v {
+			case pusher.WebSocketStateNew:
+				panic("unreachable")
+			case pusher.WebSocketStateConnected:
+				log.Println("Connect to pusher OK.")
+			case pusher.WebSocketStateDisconnected:
+				log.Println("Disconnect from pusher.")
+			case pusher.WebSocketStateClosed:
+				log.Println("Pusher closed.")
+			}
+		}
+	}()
 	err = p.Connect(interrupt2)
 	if err != nil {
 		log.Fatal(err, "Connect to pusher failed.")
